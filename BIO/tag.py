@@ -14,16 +14,18 @@ import os
 import codecs
 import csv
 
-delimiter = ' '
+delimiter = '  '
 
 
 def read_tags():
 	lst = []
+	dic = {}
 	with codecs.open('BIO/entities_tag.csv', 'r', encoding='utf-8') as f:
 		reader = csv.reader(f, delimiter=' ')
 		for row in reader:
 			lst.append(row[1])
-	return lst
+			dic[row[1]] = row[2]
+	return lst, dic
 
 
 def load_data(input):
@@ -46,15 +48,14 @@ def tag(input, output, coll_nums=2):
 	text = load_data(input)
 	# main
 	# 读取实体标记规则文件entities_tag
-	entities_tags = read_tags()
-	print(entities_tags)
+	postags, tagdic = read_tags()
 	
 	result_text = []
 	for line in text:
 		if '' != line.strip():
 			word, tag = line.split(delimiter)
-			if tag.strip() in entities_tags:
-				line = line.replace('\n', '') + delimiter + 'A' + '\n'
+			if tag.strip() in postags:
+				line = line.replace('\n', '') + delimiter + tagdic[tag.strip()] + '\n'
 		result_text.append(line)
 	# save
 	save_data(result_text, output)

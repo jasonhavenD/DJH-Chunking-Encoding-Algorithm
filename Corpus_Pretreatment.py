@@ -54,12 +54,10 @@ def peopledaily(files, save_file):
 		# 姓名合并
 		peopledaily.merge_name()
 		# print('姓名合并完成')
-		
 		result_text.append(peopledaily.tokens)
-		
-		# # /变空格或者TAB,保存到文件
-		IOUtil.save_to_file(result_text, save_file)
 	
+	# /变空格或者TAB,保存到文件
+	IOUtil.save_to_file(result_text, save_file)
 	end = datetime.datetime.now()
 	print('finished in ' + str((end - begin).seconds) + ' s!')
 	print('save as ' + save_file)
