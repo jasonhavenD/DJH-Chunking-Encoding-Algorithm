@@ -33,5 +33,5 @@ class IOUtil():
 		with codecs.open(save_file, 'w', encoding='utf-8') as f:
 			for line in result_text:
 				for token in line:
-					f.write(token.replace('/', ' ') + '\n')
+					f.write(token.replace('/', '\t') + '\n')#注意保存时用tab分隔符
 				f.write('\n')

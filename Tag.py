@@ -35,7 +35,7 @@ if __name__ == '__main__':
 		sys.exit(0)
 	else:
 		input = options.input
-		output = options.output if options.output != None else 'output.txt'
+		output = options.output if options.output != None else 'ne_chunked.txt'
 		types = ['io', 'bio', 'bmewo', 'bmewoplus']
 		if not os.path.exists(input):
 			print('input file not exists!')

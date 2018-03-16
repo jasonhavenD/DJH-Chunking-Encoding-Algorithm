@@ -14,7 +14,7 @@ import os
 import codecs
 import csv
 
-delimiter = ' '
+delimiter = '\t'
 
 
 def read_tags():
@@ -53,9 +53,13 @@ def tag(input, output, coll_nums=2):
 	result_text = []
 	for line in text:
 		if '' != line.strip():
-			word, tag = line.split(delimiter)
+			# word, tag = line.split(delimiter)
+			temps = line.split(delimiter)
+			tag = temps[int(coll_nums) - 1]
 			if tag.strip() in postags:
 				line = line.replace('\n', '') + delimiter + tagdic[tag.strip()] + '\n'
+			else:
+				line = line.replace('\n', '') + delimiter + 'O' + '\n'
 		result_text.append(line)
 	# save
 	save_data(result_text, output)
