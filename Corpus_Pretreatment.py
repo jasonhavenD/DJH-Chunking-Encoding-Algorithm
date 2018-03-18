@@ -24,7 +24,25 @@ import sys
 import datetime
 from optparse import OptionParser
 from util.peopledaily import PeopleDailyUtil
+from util.bakeoff2005 import Bakeoff2005Util
 from util.io import IOUtil
+
+
+def bakeoff2005(files, save_file):
+	'''
+	SIGHAN提供的backoff 2005语料
+	:param files:
+	:param save_file:
+	:return:
+	'''
+	text = IOUtil.load_files(files)
+	begin = datetime.datetime.now()
+	print('start to pretreat...')
+	bakeoff = Bakeoff2005Util()
+	bakeoff.pos_tag_for_crf(text, save_file)
+	end = datetime.datetime.now()
+	print('finished in ' + str((end - begin).seconds) + ' s!')
+	print('save as ' + save_file)
 
 
 def peopledaily(files, save_file):
@@ -99,7 +117,7 @@ def get_available_corpora():
 	return corpora
 
 
-# python Corpus_Pretreatment.py -c peopledaily
+# python Corpus_Pretreatment.py -c bakeoff2005
 if __name__ == '__main__':
 	usage = "usage: python Corpus_Pretreatment.py [[-c|--corpus]|[-f|--file]] [-s|--save]"
 	parser = OptionParser(usage=usage)
