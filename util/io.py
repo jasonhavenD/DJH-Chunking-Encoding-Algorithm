@@ -10,7 +10,7 @@
 -------------------------------------------------
 """
 import codecs
-
+import os
 
 class IOUtil():
 	@staticmethod
