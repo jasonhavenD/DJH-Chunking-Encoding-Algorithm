@@ -53,17 +53,17 @@ def peopledaily(files, save_file):
 	:return:
 	'''
 	text = IOUtil.load_files(files)
-	
+
 	begin = datetime.datetime.now()
 	print('start to pretreat...')
-	
+
 	result_text = []
-	
+
 	for line in text:
 		# tokens = line.split(delimiter)  # 根据语料处理，空格个数、tab等等
 		# print(tokens)
 		peopledaily = PeopleDailyUtil(delimiter='  ', line=line)
-		
+
 		#  时间合并，有待优化
 		peopledaily.merge_time()
 		# print('时间合并完成')
@@ -73,8 +73,11 @@ def peopledaily(files, save_file):
 		# 姓名合并
 		peopledaily.merge_name()
 		# print('姓名合并完成')
+		# 百分数合并
+		peopledaily.merge_percent()
+		# print('百分数合并完成')
 		result_text.append(peopledaily.tokens)
-	
+
 	# /变空格或者TAB,保存到文件
 	IOUtil.save_to_file(result_text, save_file)
 	end = datetime.datetime.now()

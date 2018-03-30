@@ -55,7 +55,7 @@ def tag(input, output, coll_nums=2):
 		if '' != line.strip():
 			# word, tag = line.split(delimiter)
 			temps = line.split(delimiter)
-			tag = temps[int(coll_nums) - 1]
+			tag = temps[coll_nums - 1]
 			if tag.strip() in postags:
 				line = line.replace('\n', '') + delimiter + tagdic[tag.strip()] + '\n'
 			else:

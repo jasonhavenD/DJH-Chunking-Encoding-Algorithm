@@ -16,18 +16,21 @@ import numpy as np
 
 if __name__ == '__main__':
 	input = 'ne_chunked.txt'
-	ftrain = 'test/train.txt'
-	ftest = 'test/test.txt'
+	ftrain = 'test/train.data'
+	ftest = 'test/test.data'
 	text = []
 	with codecs.open(input, 'r', encoding='utf-8') as f:
 		text = f.readlines()
-	
-	train_index = random.sample(range(len(text)), int(len(text) * 0.008))
-	test_index = random.sample(range(len(text)), int(len(text) * 0.002))
-	
-	train = np.array(text)[train_index]
-	test = np.array(text)[test_index]
-	
+
+	# train_index = random.sample(range(len(text)), int(len(text) * 0.8))
+	# test_index = random.sample(range(len(text)), int(len(text) * 0.2))
+	#
+	# train = np.array(text)[train_index]
+	# test = np.array(text)[test_index]
+
+	train = text[:int(len(text) * 0.8)]
+	test = text[int(len(text) * 0.8):]
+
 	with codecs.open(ftrain, 'w', encoding='utf-8') as f:
 		for line in train:
 			f.write(line)

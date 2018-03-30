@@ -16,17 +16,17 @@ class PeopleDailyUtil():
 	__delimiter = None
 	__tokens = None
 	__line = None
-	
+
 	def __init__(self, delimiter, line):
 		self.__delimiter = delimiter
 		self.__line = line
 		self.__tokens = line.split(delimiter)
-	
+
 	def merge_time(self):
 		# 时间合并，有待优化
 		regex = re.compile(
 			"\d{2,4}年/t|[零一二三四五六七八九十]{2,4}年/t|\d{1,2}月/t|[一二三四五六七八九十]{1,2}月/t|\d{1,3}日/t|[一二三四五六七八九十]{1,3}日/t|\d{1,2}时/t|[零一二三四五六七八九十]{1,3}时/t|\d{1,3}分/t|[零一二三四五六七八九十]{1,3}分/t|\d{1,3}秒/t|[零一二三四五六七八九十]{1,3}秒/t|[零一二三四五六七八九十]{1,3}点/t")
-		
+
 		# 分时间块
 		groups = []
 		first_index = -1
@@ -54,7 +54,7 @@ class PeopleDailyUtil():
 					first_index = -1
 					last_index = -1
 			i += 1
-		
+
 		# 合并每个时间块
 		merges = []
 		for i, g in enumerate(groups):
@@ -66,17 +66,17 @@ class PeopleDailyUtil():
 			merge += '/t'
 			merges.append(merge)
 		# print(merges)
-		
+
 		# 更新
 		merges.reverse()
 		for i, g in enumerate(groups[::-1]):
 			a, b = g
 			self.__tokens[a:b + 1] = [merges[i]]
-	
+
 	def merge_name(self):
 		# 姓名合并
 		regex = re.compile('.+/nr')
-		
+
 		# 名字分块
 		groups = []
 		first_index = -1
@@ -116,21 +116,21 @@ class PeopleDailyUtil():
 			merge += '/nr'
 			merges.append(merge)
 		# print(merges)
-		
+
 		# 更新
 		merges.reverse()
 		for i, g in enumerate(groups[::-1]):
 			a, b = g
 			self.__tokens[a:b + 1] = [merges[i]]
 		return self.__tokens
-	
+
 	def merge_brackets(self):
 		# 括号内部合并
 		content_regex = re.compile('\[((.+?)/(.+?))\]')
 		tag_regex = re.compile('\](\w+)')
 		contents = re.findall(content_regex, self.__line)
 		tags = re.findall(tag_regex, self.__line)
-		
+
 		# 确定块的位置
 		groups = []
 		first_index = -1
@@ -148,7 +148,7 @@ class PeopleDailyUtil():
 				i = last_index
 				first_index = -1
 			i += 1
-		
+
 		# 合并
 		# print(contents)
 		merges = []
@@ -160,21 +160,31 @@ class PeopleDailyUtil():
 		for i in range(len(merges)):
 			merges[i] = merges[i] + '/' + tags[i]
 		# print(merges)
-		
+
 		# 更新
 		merges.reverse()
 		for i, g in enumerate(groups[::-1]):
 			a, b = g
 			self.__tokens[a:b + 1] = [merges[i]]
-	
+
+	def merge_percent(self):
+		merges=[]
+		for w in self.__tokens:
+			if '%' in w:
+				w=w.replace("/%", "%")
+			merges.append(w)
+
+		self.__tokens=merges
+
+
 	@property
 	def delimiter(self):
 		return self.__delimiter
-	
+
 	@property
 	def line(self):
 		return self.__line
-	
+
 	@property
 	def tokens(self):
 		return self.__tokens

@@ -44,10 +44,10 @@ if __name__ == '__main__':
 			print("illeagal tag's type!available types : ", types)
 			sys.exit(0)
 		if 'io' == options.type.lower():
-			iotag.tag(input, output, coll_nums=options.coll_nums)
+			iotag.tag(input, output, coll_nums=int(options.coll_nums))
 		elif 'bio' == options.type.lower():
-			biotag.tag(input, output, coll_nums=options.coll_nums)
+			biotag.tag(input, output, coll_nums=int(options.coll_nums))
 		elif 'bmewo' == options.type.lower():
-			bmewotag.tag(input, output, coll_nums=options.coll_nums)
+			bmewotag.tag(input, output, coll_nums=int(options.coll_nums))
 		else:
-			bmewoplustag.tag(input, output, coll_nums=options.coll_nums)
+			bmewoplustag.tag(input, output, coll_nums=int(options.coll_nums))

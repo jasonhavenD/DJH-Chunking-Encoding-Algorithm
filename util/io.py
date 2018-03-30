@@ -26,7 +26,7 @@ class IOUtil():
 				with codecs.open(file, 'rb', encoding='utf-8') as f:
 					text.extend(f.readlines())
 		return text
-	
+
 	@staticmethod
 	def save_to_file(result_text, save_file):
 		# 保存到文件
